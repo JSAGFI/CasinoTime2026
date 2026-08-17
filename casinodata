@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blackjack Challenge 2026 - Leaderboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at center, #1a2233 0%, #0b0f17 100%),
+                  url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat fixed;
+      background-blend-mode: overlay;
+    }
+    .font-casino {
+      font-family: 'Cinzel', serif;
+    }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+    }
+    .gold-glow {
+      box-shadow: 0 0 25px rgba(234, 179, 8, 0.25);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100 p-4 md:p-8 flex flex-col items-center">
+
+  <!-- Header & Navigation Toggle -->
+  <header class="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
+    <div>
+      <h1 class="text-3xl md:text-5xl font-black font-casino text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 tracking-wide drop-shadow-md">
+        BLACKJACK CHALLENGE 2026
+      </h1>
+      <p class="text-slate-400 text-sm mt-1 uppercase tracking-widest">Live Contest Standings</p>
+    </div>
+
+    <!-- Toggle Buttons -->
+    <div class="flex bg-slate-900/80 p-1.5 rounded-2xl border border-slate-700 backdrop-blur-md">
+      <button id="tab-conv" onclick="switchView('conv')" class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-lg">
+        Conventional F&I
+      </button>
+      <button id="tab-spec" onclick="switchView('spec')" class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 text-slate-300 hover:text-white">
+        Special Finance
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Display Area -->
+  <main class="w-full max-w-7xl">
+
+    <!-- 1. CONVENTIONAL VIEW -->
+    <div id="view-conv" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- Top 4 Qualified Podiums -->
+      <section class="lg:col-span-7 flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+            <span>🏆</span> Qualified Standings <span class="text-xs font-normal text-slate-400">(30+ Units)</span>
+          </h2>
+          <span class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2.5 py-1 rounded-full font-semibold">Top 4 Advance</span>
+        </div>
+
+        <div id="qualified-container" class="grid grid-cols-1 gap-3">
+          <div class="glass-panel p-8 rounded-2xl text-center border-dashed border-slate-700">
+            <div class="text-4xl mb-2">🎲</div>
+            <h3 class="text-lg font-bold text-slate-300">The Race to 30 is On!</h3>
+            <p class="text-sm text-slate-500 mt-1">No managers have reached 30 units yet. Hit 30 deliveries to lock your spot!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- In The Hunt / Leaderboard -->
+      <section class="lg:col-span-5 flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+            <span>🎯</span> In The Hunt
+          </h2>
+          <span class="text-xs text-slate-400">Current Points Standings</span>
+        </div>
+
+        <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl">
+          <div class="grid grid-cols-12 text-xs uppercase font-bold text-slate-400 bg-slate-900/90 px-4 py-3 border-b border-slate-700">
+            <span class="col-span-6">Manager</span>
+            <span class="col-span-2 text-center">Units</span>
+            <span class="col-span-2 text-center">Pts</span>
+            <span class="col-span-2 text-center">Kicker</span>
+          </div>
+          <div id="hunt-list" class="divide-y divide-slate-800/60 max-h-[520px] overflow-y-auto">
+            <div class="p-6 text-center text-sm text-slate-400">Loading standings...</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. SPECIAL FINANCE VIEW -->
+    <div id="view-spec" class="hidden flex-col gap-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold font-casino text-amber-400">Special Finance Target Board</h2>
+          <p class="text-slate-400 text-sm">Meet all 4 Core Goals to qualify. Kicker unlocked via Days to Office & Days to Fund benchmarks.</p>
+        </div>
+      </div>
+
+      <div id="spec-cards-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-8 text-center text-slate-400">Loading Special Finance data...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const CONV_CSV_URL = "https://docs.google.com/spreadsheets/d/1nyzEH2VWUy9eK0itRaU3cZN1mef8_acqsiR6uhkeP_Y/export?format=csv&gid=2035889890";
+    const SPEC_CSV_URL = "https://docs.google.com/spreadsheets/d/1nyzEH2VWUy9eK0itRaU3cZN1mef8_acqsiR6uhkeP_Y/export?format=csv&gid=1247160146";
+
+    function switchView(tab) {
+      const convView = document.getElementById('view-conv');
+      const specView = document.getElementById('view-spec');
+      const tabConv = document.getElementById('tab-conv');
+      const tabSpec = document.getElementById('tab-spec');
+
+      if (tab === 'conv') {
+        convView.classList.remove('hidden');
+        specView.classList.add('hidden');
+        tabConv.className = "px-6 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-lg";
+        tabSpec.className = "px-6 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white";
+      } else {
+        convView.classList.add('hidden');
+        specView.classList.remove('hidden');
+        tabSpec.className = "px-6 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-lg";
+        tabConv.className = "px-6 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white";
+      }
+    }
+
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      return lines.map(line => {
+        const row = [];
+        let inQuotes = false;
+        let token = '';
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            row.push(token.trim().replace(/^"|"$/g, ''));
+            token = '';
+          } else {
+            token += char;
+          }
+        }
+        row.push(token.trim().replace(/^"|"$/g, ''));
+        return row;
+      });
+    }
+
+    async function loadConventionalData() {
+      try {
+        const response = await fetch(CONV_CSV_URL);
+        const text = await response.text();
+        const rows = parseCSV(text);
+
+        // Parse Qualified (Cols A-C, starting row index 2)
+        const qualified = [];
+        for (let i = 2; i < rows.length && i < 6; i++) {
+          const name = rows[i][0];
+          const points = rows[i][1];
+          const kicker = rows[i][2];
+          if (name && name.trim() !== '') {
+            qualified.push({
+              name: name,
+              points: points || '0',
+              kicker: kicker && (kicker.includes('✅') || kicker.toUpperCase() === 'TRUE')
+            });
+          }
+        }
+
+        // Parse In The Hunt (Cols F-I, starting row index 2)
+        const inHunt = [];
+        for (let i = 2; i < rows.length; i++) {
+          const name = rows[i][5];
+          const units = rows[i][6];
+          const points = rows[i][7];
+          const kicker = rows[i][8];
+          if (name && name.trim() !== '') {
+            inHunt.push({
+              name: name,
+              units: units || '0',
+              points: points || '0',
+              kicker: kicker && (kicker.includes('✅') || kicker.toUpperCase() === 'TRUE')
+            });
+          }
+        }
+
+        renderConventional(qualified, inHunt);
+      } catch (err) {
+        console.error("Error loading Conventional data:", err);
+      }
+    }
+
+    function renderConventional(qualified, inHunt) {
+      const qualContainer = document.getElementById('qualified-container');
+      if (qualified.length === 0) {
+        qualContainer.innerHTML = `
+          <div class="glass-panel p-8 rounded-2xl text-center border-dashed border-slate-700">
+            <div class="text-4xl mb-2">🎲</div>
+            <h3 class="text-lg font-bold text-slate-300">The Race to 30 is On!</h3>
+            <p class="text-sm text-slate-500 mt-1">No managers have reached 30 units yet. Hit 30 deliveries to lock your spot in the winners circle!</p>
+          </div>
+        `;
+      } else {
+        qualContainer.innerHTML = qualified.map((m, idx) => `
+          <div class="glass-panel p-5 rounded-2xl flex items-center justify-between gold-glow border-amber-500/40 relative overflow-hidden">
+            <div class="flex items-center gap-4">
+              <span class="text-2xl font-black font-casino text-amber-400">#${idx + 1}</span>
+              <div>
+                <h4 class="font-extrabold text-lg text-white">${m.name}</h4>
+                <span class="text-xs text-amber-300/80 uppercase font-semibold">Qualified Producer</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-6">
+              <div class="text-right">
+                <span class="text-xs uppercase text-slate-400 block font-bold">Score</span>
+                <span class="text-2xl font-black text-amber-400">${m.points} pts</span>
+              </div>
+              <div class="text-center px-3 py-1.5 rounded-xl ${m.kicker ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-400' : 'bg-slate-800 text-slate-500'}">
+                <span class="text-xs uppercase block font-bold">Kicker</span>
+                <span class="text-lg font-bold">${m.kicker ? '✅' : '❌'}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const huntList = document.getElementById('hunt-list');
+      if (inHunt.length === 0) {
+        huntList.innerHTML = `<div class="p-6 text-center text-sm text-slate-500">No active contenders</div>`;
+      } else {
+        huntList.innerHTML = inHunt.map((m, idx) => `
+          <div class="grid grid-cols-12 items-center px-4 py-3.5 hover:bg-slate-800/40 transition">
+            <div class="col-span-6 flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-500 w-4">${idx + 1}</span>
+              <span class="font-bold text-slate-200 text-sm truncate">${m.name}</span>
+            </div>
+            <span class="col-span-2 text-center text-sm font-semibold text-slate-300">${m.units}</span>
+            <span class="col-span-2 text-center text-sm font-extrabold text-amber-400">${m.points}</span>
+            <span class="col-span-2 text-center text-sm">${m.kicker ? '✅' : '<span class="text-slate-600">—</span>'}</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    async function loadSpecialData() {
+      try {
+        const response = await fetch(SPEC_CSV_URL);
+        const text = await response.text();
+        const rows = parseCSV(text);
+
+        const managers = [];
+        for (let i = 1; i < rows.length; i++) {
+          const name = rows[i][0];
+          if (name && name.trim() !== '') {
+            managers.push({
+              name: name,
+              unitGoal: rows[i][1]?.toUpperCase() === 'TRUE',
+              newUnitGoal: rows[i][2]?.toUpperCase() === 'TRUE',
+              oldAgeGoal: rows[i][3]?.toUpperCase() === 'TRUE',
+              specAprGoal: rows[i][4]?.toUpperCase() === 'TRUE',
+              kicker: rows[i][5]?.toUpperCase() === 'TRUE',
+              daysOffice: rows[i][6] || '—',
+              daysFund: rows[i][7] || '—'
+            });
+          }
+        }
+
+        renderSpecial(managers);
+      } catch (err) {
+        console.error("Error loading Special FI data:", err);
+      }
+    }
+
+    function renderSpecial(data) {
+      const container = document.getElementById('spec-cards-container');
+      if (data.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-sm text-slate-500">No data found</div>`;
+        return;
+      }
+
+      container.innerHTML = data.map(m => {
+        const goalsMet = [m.unitGoal, m.newUnitGoal, m.oldAgeGoal, m.specAprGoal].filter(Boolean).length;
+        return `
+          <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between border-slate-700 relative overflow-hidden">
+            <div>
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-xl font-black text-white">${m.name}</h3>
+                  <span class="text-xs text-slate-400">Special Finance Manager</span>
+                </div>
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full ${goalsMet === 4 ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-slate-800 text-slate-400'}">
+                  ${goalsMet} / 4 Goals
+                </span>
+              </div>
+
+              <!-- 4 Objective Pillars -->
+              <div class="grid grid-cols-2 gap-2.5 my-4">
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-center">
+                  <span class="text-[11px] uppercase font-bold text-slate-400 block mb-1">Total Delivery</span>
+                  <span class="text-2xl">${m.unitGoal ? '✅' : '❌'}</span>
+                </div>
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-center">
+                  <span class="text-[11px] uppercase font-bold text-slate-400 block mb-1">4 New Units</span>
+                  <span class="text-2xl">${m.newUnitGoal ? '✅' : '❌'}</span>
+                </div>
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-center">
+                  <span class="text-[11px] uppercase font-bold text-slate-400 block mb-1">6 Aged (90+d)</span>
+                  <span class="text-2xl">${m.oldAgeGoal ? '✅' : '❌'}</span>
+                </div>
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-center">
+                  <span class="text-[11px] uppercase font-bold text-slate-400 block mb-1">1 Spec APR/Lease</span>
+                  <span class="text-2xl">${m.specAprGoal ? '✅' : '❌'}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kicker Footer -->
+            <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] uppercase font-bold text-slate-400 block">Kicker Benchmarks</span>
+                <span class="text-xs text-slate-300 font-semibold">DTO: ${m.daysOffice} | DTF: ${m.daysFund}</span>
+              </div>
+              <span class="text-xs font-bold px-3 py-1.5 rounded-xl ${m.kicker ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'}">
+                ${m.kicker ? 'KICKER UNLOCKED' : 'LOCKED'}
+              </span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Initial Load & Auto-Refresh every 60s
+    function refreshData() {
+      loadConventionalData();
+      loadSpecialData();
+    }
+
+    refreshData();
+    setInterval(refreshData, 60000);
+  </script>
+</body>
+</html>
