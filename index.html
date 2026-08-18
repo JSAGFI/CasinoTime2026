@@ -35,15 +35,15 @@
   <!-- Header & Navigation Toggle -->
   <header class="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
     <div>
-      <h1 class="text-3xl md:text-5xl font-black font-casino text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 tracking-wide drop-shadow-md">
-        BLACKJACK CHALLENGE 2026
+      <h1 class="text-3xl md:text-5xl font-black font-casino text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-white to-slate-300 tracking-wide drop-shadow-md">
+        JSAG F&I Casino Challenge 
       </h1>
       <p class="text-slate-400 text-sm mt-1 uppercase tracking-widest">Live Contest Standings</p>
     </div>
 
     <!-- Toggle Buttons -->
     <div class="flex bg-slate-900/80 p-1.5 rounded-2xl border border-slate-700 backdrop-blur-md">
-      <button id="tab-conv" onclick="switchView('conv')" class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-lg">
+      <button id="tab-conv" onclick="switchView('conv')" class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400 text-slate-950 shadow-lg border border-white/40">
         Conventional F&I
       </button>
       <button id="tab-spec" onclick="switchView('spec')" class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 text-slate-300 hover:text-white">
@@ -70,8 +70,8 @@
         <div id="qualified-container" class="grid grid-cols-1 gap-3">
           <div class="glass-panel p-8 rounded-2xl text-center border-dashed border-slate-700">
             <div class="text-4xl mb-2">🎲</div>
-            <h3 class="text-lg font-bold text-slate-300">The Race to 30 is On!</h3>
-            <p class="text-sm text-slate-500 mt-1">No managers have reached 30 units yet. Hit 30 deliveries to lock your spot!</p>
+            <h3 class="text-lg font-bold text-slate-300">Game On!</h3>
+            <p class="text-sm text-slate-500 mt-1">No managers have reached 30 units yet.</p>
           </div>
         </div>
       </section>
@@ -119,24 +119,27 @@
     const CONV_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6tfPaDAY4NDMgCmwQ4F-KBdAowxhfmbgl5aZNP9dicccSzgyNX1tBlAiK548__yK3AwMTzvf_EeGI/pub?gid=2035889890&single=true&output=csv";
     const SPEC_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6tfPaDAY4NDMgCmwQ4F-KBdAowxhfmbgl5aZNP9dicccSzgyNX1tBlAiK548__yK3AwMTzvf_EeGI/pub?gid=1247160146&single=true&output=csv";
 
-    function switchView(tab) {
-      const convView = document.getElementById('view-conv');
-      const specView = document.getElementById('view-spec');
-      const tabConv = document.getElementById('tab-conv');
-      const tabSpec = document.getElementById('tab-spec');
+function switchView(tab) {
+  const convView = document.getElementById('view-conv');
+  const specView = document.getElementById('view-spec');
+  const tabConv = document.getElementById('tab-conv');
+  const tabSpec = document.getElementById('tab-spec');
 
-      if (tab === 'conv') {
-        convView.classList.remove('hidden');
-        specView.classList.add('hidden');
-        tabConv.className = "px-6 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-lg";
-        tabSpec.className = "px-6 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white";
-      } else {
-        convView.classList.add('hidden');
-        specView.classList.remove('hidden');
-        tabSpec.className = "px-6 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 shadow-lg";
-        tabConv.className = "px-6 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white";
-      }
-    }
+  const activeClasses = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400 text-slate-950 shadow-lg border border-white/40";
+  const inactiveClasses = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 text-slate-300 hover:text-white";
+
+  if (tab === 'conv') {
+    convView.classList.remove('hidden');
+    specView.classList.add('hidden');
+    tabConv.className = activeClasses;
+    tabSpec.className = inactiveClasses;
+  } else {
+    convView.classList.add('hidden');
+    specView.classList.remove('hidden');
+    tabSpec.className = activeClasses;
+    tabConv.className = inactiveClasses;
+  }
+}
 
     function parseCSV(text) {
       const lines = text.trim().split('\n');
