@@ -210,23 +210,23 @@
           }
         }
 
-        // Parse In The Hunt (Cols I-L, starting row index 2)
-        const inHunt = [];
-        for (let i = 2; i < rows.length; i++) {
-          const name = rows[i][8];
-          const units = rows[i][9];
-          const points = rows[i][10];
-          const kicker = rows[i][11];
-          if (name && name.trim() !== '') {
-            inHunt.push({
-              name: name,
-              units: units || '0',
-              points: points || '0',
-              kicker: kicker && (kicker.includes('✅') || kicker.toUpperCase() === 'TRUE')
-            });
+    // Parse In The Hunt (Cols H-K, starting row index 2)
+            const inHunt = [];
+            for (let i = 2; i < rows.length; i++) {
+              const name = rows[i][7];    // Col H
+              const units = rows[i][8];   // Col I
+              const points = rows[i][9];  // Col J
+              const kicker = rows[i][10]; // Col K
+              if (name && name.trim() !== '') {
+                inHunt.push({
+                  name: name,
+                  units: units || '0',
+                  points: points || '0',
+                  kicker: kicker && (kicker.includes('✅') || kicker.toUpperCase() === 'TRUE')
+                });
+              }
           }
-        }
-
+        
         renderConventional(qualified, inHunt);
       } catch (err) {
         console.error("Error loading Conventional data:", err);
