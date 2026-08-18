@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -40,10 +40,10 @@
         JSAG F&I Casino Challenge 
       </h1>
       <div class="flex items-center gap-3 mt-1">
-  <p class="text-slate-400 text-sm uppercase tracking-widest">Live Contest Standings</p>
-  <span class="text-slate-600 text-xs">•</span>
-  <span id="last-updated" class="text-amber-400/90 text-xs font-semibold tracking-wide">Syncing...</span>
-</div>
+        <p class="text-slate-400 text-sm uppercase tracking-widest">Live Contest Standings</p>
+        <span class="text-slate-600 text-xs">•</span>
+        <span id="last-updated" class="text-amber-400/90 text-xs font-semibold tracking-wide">Syncing...</span>
+      </div>
     </div>
 
     <!-- Toggle Buttons -->
@@ -124,27 +124,27 @@
     const CONV_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6tfPaDAY4NDMgCmwQ4F-KBdAowxhfmbgl5aZNP9dicccSzgyNX1tBlAiK548__yK3AwMTzvf_EeGI/pub?gid=2035889890&single=true&output=csv";
     const SPEC_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6tfPaDAY4NDMgCmwQ4F-KBdAowxhfmbgl5aZNP9dicccSzgyNX1tBlAiK548__yK3AwMTzvf_EeGI/pub?gid=1247160146&single=true&output=csv";
 
-function switchView(tab) {
-  const convView = document.getElementById('view-conv');
-  const specView = document.getElementById('view-spec');
-  const tabConv = document.getElementById('tab-conv');
-  const tabSpec = document.getElementById('tab-spec');
+    function switchView(tab) {
+      const convView = document.getElementById('view-conv');
+      const specView = document.getElementById('view-spec');
+      const tabConv = document.getElementById('tab-conv');
+      const tabSpec = document.getElementById('tab-spec');
 
-  const activeClasses = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400 text-slate-950 shadow-lg border border-white/40";
-  const inactiveClasses = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 text-slate-300 hover:text-white";
+      const activeClasses = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400 text-slate-950 shadow-lg border border-white/40";
+      const inactiveClasses = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 text-slate-300 hover:text-white";
 
-  if (tab === 'conv') {
-    convView.classList.remove('hidden');
-    specView.classList.add('hidden');
-    tabConv.className = activeClasses;
-    tabSpec.className = inactiveClasses;
-  } else {
-    convView.classList.add('hidden');
-    specView.classList.remove('hidden');
-    tabSpec.className = activeClasses;
-    tabConv.className = inactiveClasses;
-  }
-}
+      if (tab === 'conv') {
+        convView.classList.remove('hidden');
+        specView.classList.add('hidden');
+        tabConv.className = activeClasses;
+        tabSpec.className = inactiveClasses;
+      } else {
+        convView.classList.add('hidden');
+        specView.classList.remove('hidden');
+        tabSpec.className = activeClasses;
+        tabConv.className = inactiveClasses;
+      }
+    }
 
     function parseCSV(text) {
       const lines = text.trim().split('\n');
@@ -174,40 +174,40 @@ function switchView(tab) {
         const text = await response.text();
         const rows = parseCSV(text);
         
-      // Read timestamp from cell K1
+        // Read timestamp from cell K1
         const timestamp = rows[0] && rows[0][10] ? rows[0][10] : '';
         const updateEl = document.getElementById('last-updated');
         if (updateEl && timestamp) {
           updateEl.innerText = timestamp;
         }
         
-       // Parse Qualified (Cols A-C, plus stats from Cols E, G, H, I)
-    const qualified = [];
-    for (let i = 2; i < rows.length && i < 6; i++) {
-      const name = rows[i][0];
-      const points = rows[i][1];
-      const kicker = rows[i][2];
-      
-      const pvr = rows[i][4] ? Math.round(parseFloat(rows[i][4].replace(/[^0-9.-]+/g, '')) || 0) : '';
-      const vsc = rows[i][6] || '';
-      const cash = rows[i][7] || '';
-      const kickerPct = rows[i][8] || '';
+        // Parse Qualified (Cols A-C, plus stats from Cols E, G, H, I)
+        const qualified = [];
+        for (let i = 2; i < rows.length && i < 6; i++) {
+          const name = rows[i][0];
+          const points = rows[i][1];
+          const kicker = rows[i][2];
+          
+          const pvr = rows[i][4] ? Math.round(parseFloat(rows[i][4].replace(/[^0-9.-]+/g, '')) || 0) : '';
+          const vsc = rows[i][6] || '';
+          const cash = rows[i][7] || '';
+          const kickerPct = rows[i][8] || '';
 
-      if (name && name.trim() !== '') {
-        const statsList = [];
-        if (pvr) statsList.push(`$${pvr} PVR`);
-        if (vsc) statsList.push(`${vsc} VSC`);
-        if (cash) statsList.push(`${cash} Cash`);
-        if (kickerPct) statsList.push(`${kickerPct} Select`);
+          if (name && name.trim() !== '') {
+            const statsList = [];
+            if (pvr) statsList.push(`$${pvr} PVR`);
+            if (vsc) statsList.push(`${vsc} VSC`);
+            if (cash) statsList.push(`${cash} Cash`);
+            if (kickerPct) statsList.push(`${kickerPct} Select`);
 
-        qualified.push({
-          name: name,
-          points: points || '0',
-          kicker: kicker && (kicker.includes('✅') || kicker.toUpperCase() === 'TRUE'),
-          stats: statsList.join(' - ')
-        });
-      }
-    }
+            qualified.push({
+              name: name,
+              points: points || '0',
+              kicker: kicker && (kicker.includes('✅') || kicker.toUpperCase() === 'TRUE'),
+              stats: statsList.join(' - ')
+            });
+          }
+        }
 
         // Parse In The Hunt (Cols F-I, starting row index 2)
         const inHunt = [];
@@ -243,25 +243,24 @@ function switchView(tab) {
           </div>
         `;
       } else {
-} else {
-      qualContainer.innerHTML = qualified.map((m, idx) => `
-        <div class="glass-panel p-4 rounded-xl flex items-center justify-between border border-amber-500/30 bg-slate-900/60 shadow-lg">
-          <div class="flex items-center gap-4">
-            <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 font-black flex items-center justify-center text-lg">
-              #${idx + 1}
+        qualContainer.innerHTML = qualified.map((m, idx) => `
+          <div class="glass-panel p-4 rounded-xl flex items-center justify-between border border-amber-500/30 bg-slate-900/60 shadow-lg">
+            <div class="flex items-center gap-4">
+              <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 font-black flex items-center justify-center text-lg">
+                #${idx + 1}
+              </div>
+              <div>
+                <h4 class="font-extrabold text-lg text-white">${m.name}</h4>
+                ${m.stats ? `<p class="text-xs text-slate-400 font-medium tracking-wide mt-0.5">${m.stats}</p>` : ''}
+              </div>
             </div>
-            <div>
-              <h4 class="font-extrabold text-lg text-white">${m.name}</h4>
-              ${m.stats ? `<p class="text-xs text-slate-400 font-medium tracking-wide mt-0.5">${m.stats}</p>` : ''}
+            <div class="text-right">
+              <div class="text-xl font-black text-amber-400">${m.points} <span class="text-xs font-semibold text-slate-400 uppercase">pts</span></div>
+              ${m.kicker ? '<span class="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full inline-block mt-1">Kicker Active</span>' : ''}
             </div>
           </div>
-          <div class="text-right">
-            <div class="text-xl font-black text-amber-400">${m.points} <span class="text-xs font-semibold text-slate-400 uppercase">pts</span></div>
-            ${m.kicker ? '<span class="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full inline-block mt-1">Kicker Active</span>' : ''}
-          </div>
-        </div>
-      `).join('');
- }
+        `).join('');
+      }
 
       const huntList = document.getElementById('hunt-list');
       if (inHunt.length === 0) {
