@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -173,7 +173,14 @@ function switchView(tab) {
         const response = await fetch(CONV_CSV_URL);
         const text = await response.text();
         const rows = parseCSV(text);
-
+        
+      // Read timestamp from cell K1
+        const timestamp = rows[0] && rows[0][10] ? rows[0][10] : '';
+        const updateEl = document.getElementById('last-updated');
+        if (updateEl && timestamp) {
+          updateEl.innerText = timestamp;
+        }
+        
         // Parse Qualified (Cols A-C, starting row index 2)
         const qualified = [];
         for (let i = 2; i < rows.length && i < 6; i++) {
