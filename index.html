@@ -28,18 +28,17 @@
     .font-casino {
       font-family: 'Cinzel', serif;
     }
-    /* 3D Gold Casino Title Effect */
-    .font-casino-title {
-      font-family: 'CustomCasino', 'Cinzel', serif;
-      background: linear-gradient(180deg, #fff7b2 0%, #ffd700 40%, #ff8c00 70%, #d46000 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0px 2px 0px #5a0c0c)
-              drop-shadow(0px 4px 0px #380505)
-              drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.9));
-      letter-spacing: 2px;
-    }
-    .glass-panel {
+/* 3D Casino Title Effect tailored for CasinoShadow.ttf (Bright Champagne) */
+  .font-casino-title {
+    font-family: 'CustomCasino', 'Cinzel', serif;
+    color: #fff6d1;
+    letter-spacing: 3px;
+    text-shadow: 
+      0 0 8px rgba(255, 215, 0, 0.8),
+      0 0 25px rgba(234, 179, 8, 0.5),
+      0 5px 20px rgba(0, 0, 0, 1);
+    -webkit-font-smoothing: antialiased;
+  }    .glass-panel {
       background: rgba(15, 23, 42, 0.78);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
