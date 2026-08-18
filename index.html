@@ -168,6 +168,15 @@
       });
     }
 
+    function formatName(rawName) {
+      if (!rawName) return '';
+      if (rawName.includes(',')) {
+        const parts = rawName.split(',');
+        return `${parts[1].trim()} ${parts[0].trim()}`;
+      }
+      return rawName.trim();
+    }
+
     async function loadConventionalData() {
       try {
         const response = await fetch(CONV_CSV_URL);
@@ -184,7 +193,7 @@
         // Parse Qualified (Cols A-C, plus stats from Cols D, E, F, G)
         const qualified = [];
         for (let i = 2; i < rows.length && i < 6; i++) {
-          const name = rows[i][0];
+          const name = formatName(rows[i][0]);
           const points = rows[i][1];
           const kicker = rows[i][2];
           
@@ -210,23 +219,23 @@
           }
         }
 
-    // Parse In The Hunt (Cols H-K, starting row index 2)
-            const inHunt = [];
-            for (let i = 2; i < rows.length; i++) {
-              const name = rows[i][7];    // Col H
-              const units = rows[i][8];   // Col I
-              const points = rows[i][9];  // Col J
-              const kicker = rows[i][10]; // Col K
-              if (name && name.trim() !== '') {
-                inHunt.push({
-                  name: name,
-                  units: units || '0',
-                  points: points || '0',
-                  kicker: kicker && (kicker.includes('✅') || kicker.toUpperCase() === 'TRUE')
-                });
-              }
+        // Parse In The Hunt (Cols H-K, starting row index 2)
+        const inHunt = [];
+        for (let i = 2; i < rows.length; i++) {
+          const name = formatName(rows[i][7]);
+          const units = rows[i][8];
+          const points = rows[i][9];
+          const kicker = rows[i][10];
+          if (name && name.trim() !== '') {
+            inHunt.push({
+              name: name,
+              units: units || '0',
+              points: points || '0',
+              kicker: kicker && (kicker.includes('✅') || kicker.toUpperCase() === 'TRUE')
+            });
           }
-        
+        }
+
         renderConventional(qualified, inHunt);
       } catch (err) {
         console.error("Error loading Conventional data:", err);
@@ -293,7 +302,7 @@
 
         const managers = [];
         for (let i = 1; i < rows.length; i++) {
-          const name = rows[i][0];
+          const name = formatName(rows[i][0]);
           if (name && name.trim() !== '') {
             managers.push({
               name: name,
