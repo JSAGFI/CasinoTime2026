@@ -39,7 +39,11 @@
       <h1 class="text-3xl md:text-5xl font-black font-casino text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-white to-slate-300 tracking-wide drop-shadow-md">
         JSAG F&I Casino Challenge 
       </h1>
-      <p class="text-slate-400 text-sm mt-1 uppercase tracking-widest">Live Contest Standings</p>
+      <div class="flex items-center gap-3 mt-1">
+  <p class="text-slate-400 text-sm uppercase tracking-widest">Live Contest Standings</p>
+  <span class="text-slate-600 text-xs">•</span>
+  <span id="last-updated" class="text-amber-400/90 text-xs font-semibold tracking-wide">Syncing...</span>
+</div>
     </div>
 
     <!-- Toggle Buttons -->
@@ -312,7 +316,7 @@ function switchView(tab) {
               <!-- 4 Objective Pillars -->
               <div class="grid grid-cols-2 gap-2.5 my-4">
                 <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-center">
-                  <span class="text-[11px] uppercase font-bold text-slate-400 block mb-1">Total Delivery</span>
+                  <span class="text-[11px] uppercase font-bold text-slate-400 block mb-1">Total Deliveries</span>
                   <span class="text-2xl">${m.unitGoal ? '✅' : '❌'}</span>
                 </div>
                 <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-center">
