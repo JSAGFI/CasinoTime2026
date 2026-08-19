@@ -53,21 +53,26 @@
 </head>
 <body class="min-h-screen text-slate-100 p-4 md:p-8 flex flex-col items-center">
 
-  <!-- Header & Navigation Toggle -->
+<!-- Header & Navigation Toggle -->
   <header class="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-    <div>
-      <h1 class="text-4xl md:text-6xl font-black font-casino-title uppercase tracking-wider">
-        JSAG F&I Casino Challenge 
-      </h1>
-      <div class="flex items-center gap-3 mt-1">
-        <p class="text-slate-400 text-sm uppercase tracking-widest">Live Contest Standings</p>
+    <div class="flex flex-col items-center md:items-start text-center md:text-left">
+      <!-- Responsive Casino Title Image -->
+      <img 
+        src="casino-header.png" 
+        alt="JSAG F&I Casino Challenge" 
+        class="w-full max-w-[290px] sm:max-w-md md:max-w-lg lg:max-w-xl h-auto object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)] select-none"
+      />
+      
+      <!-- Subtitle & Live Status -->
+      <div class="flex items-center justify-center md:justify-start gap-3 mt-2">
+        <p class="text-slate-400 text-xs sm:text-sm uppercase tracking-widest">Live Contest Standings</p>
         <span class="text-slate-600 text-xs">•</span>
         <span id="last-updated" class="text-amber-400/90 text-xs font-semibold tracking-wide">Syncing...</span>
       </div>
     </div>
 
     <!-- Toggle Buttons -->
-    <div class="flex bg-slate-900/80 p-1.5 rounded-2xl border border-slate-700 backdrop-blur-md">
+    <div class="flex bg-slate-900/80 p-1.5 rounded-2xl border border-slate-700 backdrop-blur-md shrink-0">
       <button id="tab-conv" onclick="switchView('conv')" class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400 text-slate-950 shadow-lg border border-white/40">
         Conventional F&I
       </button>
@@ -76,6 +81,7 @@
       </button>
     </div>
   </header>
+  
   <!-- Main Display Area -->
   <main class="w-full max-w-7xl">
 
